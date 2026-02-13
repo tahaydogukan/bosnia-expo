@@ -1,0 +1,134 @@
+'use client';
+
+import { motion } from 'framer-motion';
+import { Calendar, MapPin, Users, Building2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { EVENT_INFO } from '@/lib/constants';
+
+interface HeroProps {
+  onOpenModal: (type: 'visitor' | 'exhibitor') => void;
+}
+
+export default function Hero({ onOpenModal }: HeroProps) {
+  return (
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
+      />
+      {/* Karartma katmanları */}
+      <div className="absolute inset-0 bg-black/50" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/70" />
+
+      {/* Pattern Overlay */}
+      <div className="absolute inset-0 hero-pattern" />
+
+      {/* Gradient Orbs */}
+      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
+      <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-accent/20 rounded-full blur-3xl" />
+
+      {/* Content */}
+      <div className="relative z-10 container mx-auto px-4 py-32 text-center hero-text-shadow">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-8">
+            <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
+            <span className="text-white/90 text-sm font-medium">
+              Registration Now Open
+            </span>
+          </div>
+
+          {/* Main Title */}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+            {EVENT_INFO.name.split(' ').slice(0, -1).join(' ')}
+            <br />
+            <span className="text-primary">{EVENT_INFO.name.split(' ').slice(-1)}</span>
+          </h1>
+
+          {/* Subtitle */}
+          <p className="text-lg sm:text-xl text-white/90 font-medium max-w-2xl mx-auto mb-8">
+            The premier healthcare and medical tourism exhibition in the Balkans.
+            Connect with leading providers, explore opportunities, and shape the future
+            of health tourism.
+          </p>
+
+          {/* Event Details */}
+          <div className="flex flex-wrap justify-center gap-6 mb-12">
+            <div className="flex items-center gap-2 text-white/90">
+              <Calendar className="w-5 h-5 text-primary" />
+              <span>{EVENT_INFO.date}</span>
+            </div>
+            <div className="flex items-center gap-2 text-white/90">
+              <MapPin className="w-5 h-5 text-primary" />
+              <span>{EVENT_INFO.location}</span>
+            </div>
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
+            <Button
+              size="lg"
+              className="text-lg px-8 py-6 bg-primary hover:bg-primary/90 animate-pulse-glow"
+              onClick={() => onOpenModal('visitor')}
+            >
+              <Users className="mr-2 h-5 w-5" />
+              Register as Visitor
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="text-lg px-8 py-6 bg-white/10 border-white/30 text-white hover:bg-white/20 hover:text-white"
+              onClick={() => onOpenModal('exhibitor')}
+            >
+              <Building2 className="mr-2 h-5 w-5" />
+              Become an Exhibitor
+            </Button>
+          </div>
+
+          {/* Stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto"
+          >
+            {[
+              { value: '100+', label: 'Exhibitors' },
+              { value: '5000+', label: 'Visitors' },
+              { value: '20+', label: 'Countries' },
+              { value: '50+', label: 'Speakers' },
+            ].map((stat, index) => (
+              <div key={index} className="text-center">
+                <div className="text-3xl md:text-4xl font-bold text-white mb-1">
+                  {stat.value}
+                </div>
+                <div className="text-white/80 text-sm font-medium">{stat.label}</div>
+              </div>
+            ))}
+          </motion.div>
+        </motion.div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+      >
+        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
+          <motion.div
+            animate={{ y: [0, 12, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5 }}
+            className="w-1.5 h-3 bg-white/50 rounded-full mt-2"
+          />
+        </div>
+      </motion.div>
+    </section>
+  );
+}
