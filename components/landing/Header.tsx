@@ -8,9 +8,15 @@ import { Menu, X, Calendar, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { NAV_ITEMS, EVENT_INFO } from '@/lib/constants';
 
-export default function Header() {
+interface HeaderProps {
+  forceSolid?: boolean;
+}
+
+export default function Header({ forceSolid = false }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const showSolidHeader = forceSolid || isScrolled;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,7 +29,7 @@ export default function Header() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
+        showSolidHeader
           ? 'bg-white/95 backdrop-blur-md shadow-lg'
           : 'bg-transparent'
       }`}
@@ -33,7 +39,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <Image
-              src="/images/logo.png"
+              src="/images/logo2.png"
               alt="Bosnia Healthcare Expo"
               width={150}
               height={50}
@@ -49,7 +55,7 @@ export default function Header() {
                 key={item.href}
                 href={item.href}
                 className={`text-sm font-medium transition-colors hover:text-primary ${
-                  isScrolled ? 'text-foreground' : 'text-white'
+                  showSolidHeader ? 'text-foreground' : 'text-white'
                 }`}
               >
                 {item.label}
@@ -61,7 +67,7 @@ export default function Header() {
           <div className="hidden md:flex items-center gap-4">
             <div
               className={`flex items-center gap-2 text-xs ${
-                isScrolled ? 'text-muted-foreground' : 'text-white/80'
+                showSolidHeader ? 'text-muted-foreground' : 'text-white/80'
               }`}
             >
               <Calendar size={14} />
@@ -69,7 +75,7 @@ export default function Header() {
             </div>
             <div
               className={`flex items-center gap-2 text-xs ${
-                isScrolled ? 'text-muted-foreground' : 'text-white/80'
+                showSolidHeader ? 'text-muted-foreground' : 'text-white/80'
               }`}
             >
               <MapPin size={14} />
@@ -82,7 +88,7 @@ export default function Header() {
             variant="ghost"
             size="icon"
             className={`lg:hidden ${
-              isScrolled ? 'text-foreground' : 'text-white'
+              showSolidHeader ? 'text-foreground' : 'text-white'
             }`}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
