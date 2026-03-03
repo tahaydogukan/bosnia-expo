@@ -101,6 +101,7 @@ export const PAST_PARTICIPANTS = [
 // Navigation items
 export const NAV_ITEMS = [
   { label: 'Home', href: '/' },
+  { label: 'Events', href: '/events' },
   { label: 'About', href: '#about' },
   { label: 'Why Attend', href: '#why-us' },
   { label: 'Blog', href: '/blog' },
